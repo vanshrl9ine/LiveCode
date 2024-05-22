@@ -49,28 +49,8 @@ require(['vs/editor/editor.main'], function() {
             '    return 0;',
             '}'
         ].join('\n'),
-        html: [
-            '<!DOCTYPE html>',
-            '<html>',
-            '<head>',
-            '    <title>Hello World</title>',
-            '</head>',
-            '<body>',
-            '    <h1>Hello, World!</h1>',
-            '</body>',
-            '</html>'
-        ].join('\n'),
-        css: [
-            'body {',
-            '    font-family: Arial, sans-serif;',
-            '    background-color: #f0f0f0;',
-            '    margin: 0;',
-            '    padding: 0;',
-            '}',
-            'h1 {',
-            '    color: #333;',
-            '}'
-        ].join('\n')
+        
+        
     };
 
     document.getElementById('language-selector').addEventListener('change', function() {
@@ -78,5 +58,27 @@ require(['vs/editor/editor.main'], function() {
         var template = templates[newLanguage] || '';
         monaco.editor.setModelLanguage(editor.getModel(), newLanguage);
         editor.setValue(template);
+    });
+
+    document.getElementById('run-button').addEventListener('click', function() {
+        var code = editor.getValue();
+        var input = document.getElementById('input').value;
+        var language = document.getElementById('language-selector').value;
+        
+        fetch('/run', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                code: code,
+                input: input,
+                language: language
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('output').value = data.output;
+        });
     });
 });

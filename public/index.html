@@ -11,10 +11,8 @@
             height: 100%;
             overflow: hidden;
             font-family: Calibri, sans-serif;
-        }
-        #editor {
-            width: 100%;
-            height: calc(100% - 40px); /* Adjust height to accommodate the dropdown */
+            display: flex;
+            flex-direction: column;
         }
         #toolbar {
             height: 40px;
@@ -23,9 +21,31 @@
             display: flex;
             align-items: center;
             padding: 0 10px;
+            justify-content: space-between;
         }
-        #language-selector {
-            margin-left: auto;
+        #main-content {
+            display: flex;
+            flex-grow: 1;
+            height: calc(100% - 40px); /* Subtract height of toolbar */
+        }
+        #editor {
+            width: 70%;
+            height: 100%;
+        }
+        #sidebar {
+            width: 30%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        #input-area, #output-area {
+            flex: 1;
+            margin-bottom: 10px;
+        }
+        #run-button {
+            height: 40px;
         }
     </style>
 </head>
@@ -37,11 +57,22 @@
             <option value="python">Python</option>
             <option value="java">Java</option>
             <option value="cpp">C++</option>
-            <option value="html">HTML</option>
-            <option value="css">CSS</option>
         </select>
+        <button id="run-button">Run</button>
     </div>
-    <div id="editor"></div>
+    <div id="main-content">
+        <div id="editor"></div>
+        <div id="sidebar">
+            <div id="input-area">
+                <h3>Input</h3>
+                <textarea id="input" style="width: 100%; height: 100%;"></textarea>
+            </div>
+            <div id="output-area">
+                <h3>Output</h3>
+                <textarea id="output" style="width: 100%; height: 100%;" readonly></textarea>
+            </div>
+        </div>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/monaco-editor/min/vs/loader.js"></script>
     <script src="/client.js"></script>
