@@ -5,13 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Code Editor</title>
     <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: Calibri, sans-serif;
+        }
         #editor {
             width: 100%;
-            height: 100vh;
+            height: calc(100% - 40px); /* Adjust height to accommodate the dropdown */
+        }
+        #toolbar {
+            height: 40px;
+            background-color: #1e1e1e;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+        #language-selector {
+            margin-left: auto;
         }
     </style>
 </head>
 <body>
+    <div id="toolbar">
+        <label for="language-selector">Language: </label>
+        <select id="language-selector">
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+        </select>
+    </div>
     <div id="editor"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/monaco-editor/min/vs/loader.js"></script>
